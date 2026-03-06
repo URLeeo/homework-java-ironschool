@@ -1,13 +1,17 @@
 package org.example.ironschool_homework.model;
 
+import java.util.UUID;
+
 public class Student {
     private String studentId;
     private String name;
     private String address;
     private String email;
     private Course course;
+    private static int counter=1;
 
     public Student(String name, String address, String email) {
+        this.studentId = "T"+counter++;
         this.name = name;
         this.address = address;
         this.email = email;
