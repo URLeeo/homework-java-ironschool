@@ -1,12 +1,14 @@
 package org.example.ironschool_homework.model;
 
 public class Teacher {
+    private static int counter = 1;
     private String teacherId;
     private String name;
     private double salary;
 
 
     public Teacher(String name, double salary) {
+        this.teacherId = "T" + counter++;
         this.name = name;
         this.salary = salary;
     }

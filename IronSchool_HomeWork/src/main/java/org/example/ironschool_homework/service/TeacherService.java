@@ -11,13 +11,12 @@ public class TeacherService {
 
     private Map<String, Teacher> Teachers = new HashMap<>();
 
-    public void createTeacher(String teacherId, String name, double salary){
-        Teacher teacher = new Teacher(teacherId,name,salary);
-        Teachers.put(teacherId,teacher);
+    public void createTeacher(String name, double salary){
+        Teacher teacher = new Teacher(name,salary);
+        Teachers.put(teacher.getTeacherId(),teacher);
     }
 
     public Collection<Teacher> getAllTeachers(){
-        Collection<Teacher> teachers = Teachers.values();
-        return teachers;
+        return Teachers.values();
     }
 }
