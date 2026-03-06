@@ -8,6 +8,7 @@ public class IronSchoolHomeWorkApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(IronSchoolHomeWorkApplication.class, args);
+        System.out.println("Course App Started...");
     }
 
 }
