@@ -1,9 +1,17 @@
 package org.example.ironschool_homework.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 public class Teacher {
     private static int counter = 1;
     private String teacherId;
+
+    @NotBlank(message = "Name cannot be empty!")
     private String name;
+
+    @Positive(message = "Salary can't be negative!")
     private double salary;
 
 
