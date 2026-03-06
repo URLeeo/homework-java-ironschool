@@ -1,20 +1,28 @@
 package org.example.ironschool_homework.model;
 
 public class Teacher {
-    private Long id;
+    private String teacherId;
     private String name;
+    private double salary;
 
-    public Teacher(Long id, String name) {
-        this.id = id;
+
+    public Teacher(String name, double salary) {
         this.name = name;
+        this.salary = salary;
     }
 
-    public Long getId() {
-        return id;
+    public Teacher(String teacherId, String name, double salary) {
+        this.teacherId = teacherId;
+        this.name = name;
+        this.salary = salary;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getName() {
@@ -23,5 +31,13 @@ public class Teacher {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 }
