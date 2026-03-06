@@ -25,6 +25,20 @@ public class TeacherController {
         return ResponseEntity.ok(teacherService.getAllTeachers());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Teacher> findById(@PathVariable String id) {
+        Teacher foundTeacher = teacherService.getAllTeachers()
+                .stream()
+                .filter(teacher -> teacher.getTeacherId().equals(id))
+                .findFirst()
+                .orElse(null);
+
+        if (foundTeacher == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(foundTeacher);
+    }
+
     @PostMapping
     public ResponseEntity<Teacher> create(@Valid @RequestBody Teacher teacher){
         Teacher newTeacher = teacherService.createTeacher(teacher.getName(),teacher.getSalary());
