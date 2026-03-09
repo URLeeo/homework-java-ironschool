@@ -11,9 +11,8 @@ public class Teacher {
     @NotBlank(message = "Name cannot be empty!")
     private String name;
 
-    @Positive(message = "Salary can't be negative!")
+    @Positive(message = "Salary must be greater than 0!")
     private double salary;
-
 
     public Teacher(String name, double salary) {
         this.teacherId = "T" + counter++;
@@ -25,6 +24,9 @@ public class Teacher {
         this.teacherId = teacherId;
         this.name = name;
         this.salary = salary;
+    }
+
+    public Teacher() {
     }
 
     public String getTeacherId() {

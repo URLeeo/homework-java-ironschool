@@ -11,15 +11,19 @@ import java.util.Map;
 @Service
 public class TeacherService {
 
-    private Map<String, Teacher> Teachers = new HashMap<>();
+    private final Map<String, Teacher> teachers = new HashMap<>();
 
-    public Teacher createTeacher(String name, double salary){
-        Teacher teacher = new Teacher(name,salary);
-        Teachers.put(teacher.getTeacherId(),teacher);
+    public Teacher createTeacher(String name, double salary) {
+        Teacher teacher = new Teacher(name, salary);
+        teachers.put(teacher.getTeacherId(), teacher);
         return teacher;
     }
 
-    public Collection<Teacher> getAllTeachers(){
-        return Teachers.values();
+    public Collection<Teacher> getAllTeachers() {
+        return teachers.values();
+    }
+
+    public Teacher getTeacherById(String id) {
+        return teachers.get(id);
     }
 }
