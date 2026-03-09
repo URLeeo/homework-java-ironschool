@@ -14,34 +14,32 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/api/teacher")
 public class TeacherController {
+
     private final TeacherService teacherService;
 
-    public TeacherController(TeacherService teacherService){
+    public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Teacher>> findAll(){
+    public ResponseEntity<Collection<Teacher>> findAll() {
         return ResponseEntity.ok(teacherService.getAllTeachers());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> findById(@PathVariable String id) {
-        Teacher foundTeacher = teacherService.getAllTeachers()
-                .stream()
-                .filter(teacher -> teacher.getTeacherId().equals(id))
-                .findFirst()
-                .orElse(null);
+        Teacher foundTeacher = teacherService.getTeacherById(id);
 
         if (foundTeacher == null) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(foundTeacher);
     }
 
     @PostMapping
-    public ResponseEntity<Teacher> create(@Valid @RequestBody Teacher teacher){
-        Teacher newTeacher = teacherService.createTeacher(teacher.getName(),teacher.getSalary());
+    public ResponseEntity<Teacher> create(@Valid @RequestBody Teacher teacher) {
+        Teacher newTeacher = teacherService.createTeacher(teacher.getName(), teacher.getSalary());
         return ResponseEntity.status(HttpStatus.CREATED).body(newTeacher);
     }
 }

@@ -2,23 +2,26 @@ package org.example.ironschool_homework.service;
 
 import org.example.ironschool_homework.model.Student;
 import org.example.ironschool_homework.model.Teacher;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Service
 public class StudentService {
 
     private final Map<String, Student> students = new HashMap<>();
 
-    public List<Student> getStudents() {
-        return new ArrayList<>(students.values());
+    public Collection<Student> getAllStudents() {
+        return students.values();
     }
 
-    public Student addStudent(String studentId, String name, String address, String email) {
+    public Student createStudent(String name, String address, String email) {
         Student student = new Student(name, address, email);
-        students.put(studentId, student);
+        students.put(student.getStudentId(), student);
         return student;
+    }
+
+    public Student getStudentById(String id) {
+        return students.get(id);
     }
 }

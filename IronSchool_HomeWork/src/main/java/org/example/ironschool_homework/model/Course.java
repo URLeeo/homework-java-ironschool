@@ -1,17 +1,30 @@
 package org.example.ironschool_homework.model;
 
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 
 public class Course {
+    private static int counter = 1;
+
     private String courseId;
+
+    @NotBlank(message = "Course name cannot be empty!")
     private String name;
+
+    @PositiveOrZero(message = "Price cannot be negative!")
     private double price;
+
     private double money_earned;
+
     private Teacher teacher;
 
     public Course(String name, double price) {
+        this.courseId = "C" + counter++;
         this.name = name;
         this.price = price;
+        this.money_earned = 0;
+        this.teacher = null;
     }
 
     public Course(String courseId, String name, double price, double money_earned, Teacher teacher) {
@@ -20,6 +33,9 @@ public class Course {
         this.price = price;
         this.money_earned = money_earned;
         this.teacher = teacher;
+    }
+
+    public Course() {
     }
 
     public String getCourseId() {
