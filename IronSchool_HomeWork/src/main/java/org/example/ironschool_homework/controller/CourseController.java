@@ -72,4 +72,15 @@ public class CourseController {
     public ResponseEntity<Map<String, Double>> showMoneyEarned() {
         return ResponseEntity.ok(Map.of("money_earned", courseService.showTotalMoneyEarned()));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Course> update(@PathVariable String id, @Valid @RequestBody Course course) {
+        Course currentCourse =courseService.updateCourse(id,course.getPrice(),course.getName());
+        return ResponseEntity.ok(currentCourse);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Course> delete(@PathVariable String id) {
+        courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
+    }
 }

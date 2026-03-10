@@ -26,4 +26,35 @@ public class TeacherService {
     public Teacher getTeacherById(String id) {
         return teachers.get(id);
     }
+
+    public Teacher updateTeacherById(String id, String name, double salary) {
+        Teacher oldTeacher = getTeacherById(id);
+        if (oldTeacher != null) {
+           oldTeacher.setName(name);
+           oldTeacher.setSalary(salary);
+           teachers.put(oldTeacher.getTeacherId(), oldTeacher);
+           return oldTeacher;
+        }
+        throw new RuntimeException("Teacher not found");
+    }
+
+    public Teacher patchTeacherById(String id, String name, double salary) {
+        Teacher oldTeacher = getTeacherById(id);
+        if (oldTeacher != null) {
+            if(name!=null){
+                oldTeacher.setName(name);
+            }
+            teachers.put(oldTeacher.getTeacherId(), oldTeacher);
+            return oldTeacher;
+
+        }
+        throw new RuntimeException("Teacher not found");
+    }
+
+    public void deleteTeacherById(String id) {
+        if (!teachers.containsKey(id)) {
+            throw new RuntimeException("Teacher not found");
+        }
+        teachers.remove(id);
+    }
 }

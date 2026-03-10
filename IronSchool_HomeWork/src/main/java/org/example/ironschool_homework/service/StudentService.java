@@ -24,4 +24,43 @@ public class StudentService {
     public Student getStudentById(String id) {
         return students.get(id);
     }
+
+
+    public Student updateStudentById(String id, String name,String address,String email)  {
+        Student student1 = getStudentById(id);
+        if (student1 != null) {
+            student1.setName(name);
+            student1.setAddress(address);
+            student1.setEmail(email);
+            students.put(student1.getStudentId(), student1);
+            return student1;
+        }
+        throw  new RuntimeException("Student not found");
+    }
+
+    public Student patchStudentById(String id, String name,String address,String email) {
+        Student student1 = getStudentById(id);
+        if (student1 != null) {
+            if(name!=null){
+                student1.setName(name);
+            }
+            if(address!=null){
+                student1.setAddress(address);
+            }
+            if(email!=null){
+                student1.setEmail(email);
+            }
+            students.put(student1.getStudentId(), student1);
+            return student1;
+        }
+        throw  new RuntimeException("Student not found");
+    }
+
+    public void deleteStudentById(String id) {
+       if (!students.containsKey(id)) {
+           throw  new RuntimeException("Student not found");
+       }
+       students.remove(id);
+    }
+
 }

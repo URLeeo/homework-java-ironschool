@@ -89,4 +89,21 @@ public class CourseService {
 
         return totalEarned - totalSalary;
     }
+    public Course updateCourse(String id, double price,String name ) {
+        Course course = getCourseById(id);
+        if (course != null) {
+            course.setName(name);
+            course.setPrice(price);
+            courses.put(id, course);
+            return course;
+        }
+        throw new RuntimeException("Course not found!");
+    }
+
+    public void deleteCourse(String id) {
+        if (!courses.containsKey(id)) {
+            throw new RuntimeException("Course not found!");
+        }
+        courses.remove(id);
+    }
 }
