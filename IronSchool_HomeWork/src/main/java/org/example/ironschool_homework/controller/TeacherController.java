@@ -42,4 +42,23 @@ public class TeacherController {
         Teacher newTeacher = teacherService.createTeacher(teacher.getName(), teacher.getSalary());
         return ResponseEntity.status(HttpStatus.CREATED).body(newTeacher);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Teacher> update(@PathVariable String id, @Valid @RequestBody Teacher teacher) {
+        Teacher teacher1=teacherService.updateTeacherById(id,teacher.getName(), teacher.getSalary());
+        return ResponseEntity.ok(teacher1);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Teacher> patch(@PathVariable String id, @Valid @RequestBody Teacher teacher) {
+        Teacher teacher1=teacherService.patchTeacherById(id,teacher.getName(), teacher.getSalary());
+        return ResponseEntity.ok(teacher1);
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Teacher> delete(@PathVariable String id) {
+        teacherService.deleteTeacherById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

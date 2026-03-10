@@ -44,4 +44,20 @@ public class StudentController {
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(newStudent);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> update(String id,@Valid @RequestBody Student student) {
+        Student student1=studentService.updateStudentById(id,student.getName(),student.getAddress(),student.getEmail());
+        return ResponseEntity.ok(student1);
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Student> partial(@Valid @RequestBody Student student,@PathVariable String id) {
+        Student student1=studentService.patchStudentById(id,student.getName(),student.getAddress(),student.getEmail());
+        return ResponseEntity.ok(student1);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Student> delete(@PathVariable String id) {
+        studentService.deleteStudentById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
