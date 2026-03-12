@@ -1,5 +1,6 @@
 package org.example.ironschool_homework.service;
 
+import org.example.ironschool_homework.exception.StudentNotFoundException;
 import org.example.ironschool_homework.model.Student;
 import org.example.ironschool_homework.model.Teacher;
 import org.springframework.stereotype.Service;
@@ -22,45 +23,43 @@ public class StudentService {
     }
 
     public Student getStudentById(String id) {
+        if (!students.containsKey(id)) {
+            throw new StudentNotFoundException("Student with id " + id + " not found");
+        }
+
         return students.get(id);
     }
 
-
-    public Student updateStudentById(String id, String name,String address,String email)  {
+    public Student updateStudentById(String id, String name, String address, String email) {
         Student student1 = getStudentById(id);
-        if (student1 != null) {
-            student1.setName(name);
-            student1.setAddress(address);
-            student1.setEmail(email);
-            students.put(student1.getStudentId(), student1);
-            return student1;
-        }
-        throw  new RuntimeException("Student not found");
+
+        student1.setName(name);
+        student1.setAddress(address);
+        student1.setEmail(email);
+        students.put(id, student1);
+        return student1;
+
     }
 
-    public Student patchStudentById(String id, String name,String address,String email) {
+    public Student patchStudentById(String id, String name, String address, String email) {
         Student student1 = getStudentById(id);
-        if (student1 != null) {
-            if(name!=null){
-                student1.setName(name);
-            }
-            if(address!=null){
-                student1.setAddress(address);
-            }
-            if(email!=null){
-                student1.setEmail(email);
-            }
-            students.put(student1.getStudentId(), student1);
-            return student1;
+        if (name != null) {
+            student1.setName(name);
         }
-        throw  new RuntimeException("Student not found");
+        if (address != null) {
+            student1.setAddress(address);
+        }
+        if (email != null) {
+            student1.setEmail(email);
+        }
+        students.put(student1.getStudentId(), student1);
+        return student1;
+
     }
 
     public void deleteStudentById(String id) {
-       if (!students.containsKey(id)) {
-           throw  new RuntimeException("Student not found");
-       }
-       students.remove(id);
+        Student student = getStudentById(id);
+        students.remove(id);
     }
 
 }

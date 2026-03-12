@@ -1,5 +1,6 @@
 package org.example.ironschool_homework.service;
 
+import org.example.ironschool_homework.exception.TeacherNotFoundException;
 import org.example.ironschool_homework.model.Teacher;
 import org.springframework.stereotype.Service;
 
@@ -24,37 +25,30 @@ public class TeacherService {
     }
 
     public Teacher getTeacherById(String id) {
+        if (!teachers.containsKey(id)) {
+            throw new TeacherNotFoundException("Teacher with id " + id + " does not exist");
+        }
         return teachers.get(id);
     }
 
     public Teacher updateTeacherById(String id, String name, double salary) {
         Teacher oldTeacher = getTeacherById(id);
-        if (oldTeacher != null) {
-           oldTeacher.setName(name);
-           oldTeacher.setSalary(salary);
-           teachers.put(oldTeacher.getTeacherId(), oldTeacher);
-           return oldTeacher;
-        }
-        throw new RuntimeException("Teacher not found");
+        oldTeacher.setName(name);
+        oldTeacher.setSalary(salary);
+        return oldTeacher;
     }
 
     public Teacher patchTeacherById(String id, String name, double salary) {
         Teacher oldTeacher = getTeacherById(id);
-        if (oldTeacher != null) {
-            if(name!=null){
-                oldTeacher.setName(name);
-            }
-            teachers.put(oldTeacher.getTeacherId(), oldTeacher);
-            return oldTeacher;
-
+        if (name != null) {
+            oldTeacher.setName(name);
         }
-        throw new RuntimeException("Teacher not found");
+        return oldTeacher;
+
     }
 
     public void deleteTeacherById(String id) {
-        if (!teachers.containsKey(id)) {
-            throw new RuntimeException("Teacher not found");
-        }
+        getTeacherById(id);
         teachers.remove(id);
     }
 }

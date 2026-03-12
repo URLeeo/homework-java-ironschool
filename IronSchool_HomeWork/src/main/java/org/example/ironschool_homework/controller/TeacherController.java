@@ -29,11 +29,6 @@ public class TeacherController {
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> findById(@PathVariable String id) {
         Teacher foundTeacher = teacherService.getTeacherById(id);
-
-        if (foundTeacher == null) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.ok(foundTeacher);
     }
 
@@ -45,13 +40,13 @@ public class TeacherController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Teacher> update(@PathVariable String id, @Valid @RequestBody Teacher teacher) {
-        Teacher teacher1=teacherService.updateTeacherById(id,teacher.getName(), teacher.getSalary());
+        Teacher teacher1 = teacherService.updateTeacherById(id, teacher.getName(), teacher.getSalary());
         return ResponseEntity.ok(teacher1);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Teacher> patch(@PathVariable String id, @Valid @RequestBody Teacher teacher) {
-        Teacher teacher1=teacherService.patchTeacherById(id,teacher.getName(), teacher.getSalary());
+    public ResponseEntity<Teacher> patch(@PathVariable String id, @RequestBody Teacher teacher) {
+        Teacher teacher1 = teacherService.patchTeacherById(id, teacher.getName(), teacher.getSalary());
         return ResponseEntity.ok(teacher1);
 
     }
