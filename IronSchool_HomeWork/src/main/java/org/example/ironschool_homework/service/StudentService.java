@@ -26,17 +26,14 @@ public class StudentService {
         if (!students.containsKey(id)) {
             throw new StudentNotFoundException("Student with id " + id + " not found");
         }
-
         return students.get(id);
     }
 
     public Student updateStudentById(String id, String name, String address, String email) {
         Student student1 = getStudentById(id);
-
         student1.setName(name);
         student1.setAddress(address);
         student1.setEmail(email);
-        students.put(id, student1);
         return student1;
 
     }
@@ -52,7 +49,6 @@ public class StudentService {
         if (email != null) {
             student1.setEmail(email);
         }
-        students.put(student1.getStudentId(), student1);
         return student1;
 
     }
