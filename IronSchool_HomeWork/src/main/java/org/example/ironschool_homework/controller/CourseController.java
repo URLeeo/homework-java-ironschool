@@ -29,11 +29,6 @@ public class CourseController {
     @GetMapping("/{id}")
     public ResponseEntity<Course> findById(@PathVariable String id) {
         Course course = courseService.getCourseById(id);
-
-        if (course == null) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.ok(course);
     }
 
@@ -45,22 +40,14 @@ public class CourseController {
 
     @PutMapping("/{courseId}/assign/{teacherId}")
     public ResponseEntity<?> assignTeacher(@PathVariable String courseId, @PathVariable String teacherId) {
-        try {
-            Course updatedCourse = courseService.assignTeacher(teacherId, courseId);
-            return ResponseEntity.ok(updatedCourse);
-        } catch (RuntimeException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
+        Course updatedCourse = courseService.assignTeacher(teacherId, courseId);
+        return ResponseEntity.ok(updatedCourse);
     }
 
     @PutMapping("/{courseId}/enroll/{studentId}")
     public ResponseEntity<?> enrollStudent(@PathVariable String courseId, @PathVariable String studentId) {
-        try {
-            Student updatedStudent = courseService.enrollStudent(studentId, courseId);
-            return ResponseEntity.ok(updatedStudent);
-        } catch (RuntimeException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
+        Student updatedStudent = courseService.enrollStudent(studentId, courseId);
+        return ResponseEntity.ok(updatedStudent);
     }
 
     @GetMapping("/profit")
@@ -75,9 +62,10 @@ public class CourseController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Course> update(@PathVariable String id, @Valid @RequestBody Course course) {
-        Course currentCourse =courseService.updateCourse(id,course.getPrice(),course.getName());
+        Course currentCourse = courseService.updateCourse(id, course.getPrice(), course.getName());
         return ResponseEntity.ok(currentCourse);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Course> delete(@PathVariable String id) {
         courseService.deleteCourse(id);

@@ -27,11 +27,6 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<Student> findById(@PathVariable String id) {
         Student student = studentService.getStudentById(id);
-
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.ok(student);
     }
 
@@ -46,15 +41,17 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Student> update(String id,@Valid @RequestBody Student student) {
-        Student student1=studentService.updateStudentById(id,student.getName(),student.getAddress(),student.getEmail());
+    public ResponseEntity<Student> update(@PathVariable String id, @Valid @RequestBody Student student) {
+        Student student1 = studentService.updateStudentById(id, student.getName(), student.getAddress(), student.getEmail());
         return ResponseEntity.ok(student1);
     }
+
     @PatchMapping("/{id}")
-    public ResponseEntity<Student> partial(@Valid @RequestBody Student student,@PathVariable String id) {
-        Student student1=studentService.patchStudentById(id,student.getName(),student.getAddress(),student.getEmail());
+    public ResponseEntity<Student> partial(@PathVariable String id, @RequestBody Student student) {
+        Student student1 = studentService.patchStudentById(id, student.getName(), student.getAddress(), student.getEmail());
         return ResponseEntity.ok(student1);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Student> delete(@PathVariable String id) {
         studentService.deleteStudentById(id);

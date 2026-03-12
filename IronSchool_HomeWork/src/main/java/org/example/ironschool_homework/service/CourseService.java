@@ -1,5 +1,9 @@
 package org.example.ironschool_homework.service;
 
+import org.example.ironschool_homework.exception.CourseNotFoundException;
+import org.example.ironschool_homework.exception.StudentAlreadyEnrolledException;
+import org.example.ironschool_homework.exception.StudentNotFoundException;
+import org.example.ironschool_homework.exception.TeacherNotFoundException;
 import org.example.ironschool_homework.model.Course;
 import org.example.ironschool_homework.model.Student;
 import org.example.ironschool_homework.model.Teacher;
@@ -32,42 +36,27 @@ public class CourseService {
     }
 
     public Course getCourseById(String id) {
+        if (!courses.containsKey(id)) {
+            throw new CourseNotFoundException("Course not found");
+        }
         return courses.get(id);
     }
 
     public Course assignTeacher(String teacherId, String courseId) {
         Teacher teacher = teacherService.getTeacherById(teacherId);
-        if (teacher == null) {
-            throw new RuntimeException("Teacher not found!");
-        }
-
         Course course = getCourseById(courseId);
-        if (course == null) {
-            throw new RuntimeException("Course not found!");
-        }
-
         course.setTeacher(teacher);
         return course;
     }
 
     public Student enrollStudent(String studentId, String courseId) {
         Student student = studentService.getStudentById(studentId);
-        if (student == null) {
-            throw new RuntimeException("Student not found!");
-        }
-
         Course course = getCourseById(courseId);
-        if (course == null) {
-            throw new RuntimeException("Course not found!");
-        }
-
         if (student.getCourse() != null) {
-            throw new RuntimeException("Student already enrolled in a course!");
+            throw new StudentAlreadyEnrolledException("Student already enrolled in a course!");
         }
-
         student.setCourse(course);
         course.setMoney_earned(course.getMoney_earned() + course.getPrice());
-
         return student;
     }
 
@@ -89,21 +78,16 @@ public class CourseService {
 
         return totalEarned - totalSalary;
     }
-    public Course updateCourse(String id, double price,String name ) {
+
+    public Course updateCourse(String id, double price, String name) {
         Course course = getCourseById(id);
-        if (course != null) {
-            course.setName(name);
-            course.setPrice(price);
-            courses.put(id, course);
-            return course;
-        }
-        throw new RuntimeException("Course not found!");
+        course.setName(name);
+        course.setPrice(price);
+        return course;
     }
 
     public void deleteCourse(String id) {
-        if (!courses.containsKey(id)) {
-            throw new RuntimeException("Course not found!");
-        }
+        getCourseById(id);
         courses.remove(id);
     }
 }
